@@ -16,7 +16,11 @@ The primary purpose of the `PoolManager` is to:
 ### Singleton Design
 - Uniswap V4 uses a Singleton design pattern for the `PoolManager`
 - All pool state and logic are encapsulated within the `PoolManager` contract
-- Eliminates the need for separate pool contracts, reducing gas costs for pool creation and multi-hop swaps
+
+### Locking Mechanism
+- The `PoolManager` uses a locking mechanism to ensure atomicity and correctness of operations that happen in hooks
+- The contract can be locked and unlocked using the `unlock` function
+- When unlocked, the calling contract can perform various operations and settle outstanding balances before returning control to the `PoolManager`
 
 ### Pool State
 - The `PoolManager` maintains a mapping called `_pools`, which associates a `PoolId` with its corresponding `Pool.State` struct
@@ -29,7 +33,7 @@ The primary purpose of the `PoolManager` is to:
 
 ### Libraries
 - The pool logic is implemented using Solidity libraries to keep the `PoolManager` contract modular and gas-efficient
-- Key libraries include:
+- These libraries are:
     - `Pool`: Contains core pool functionality, such as swaps and liquidity management
     - `Hooks`: Handles the execution of hook functions
     - `Position`: Manages liquidity positions within a pool
@@ -52,7 +56,7 @@ The primary purpose of the `PoolManager` is to:
 - Swaps utilize flash accounting, where tokens are moved into the `PoolManager`, and only the final output tokens are withdrawn
 
 ### Liquidity Management
-- Liquidity providers can add or remove liquidity using the `modifyLiquidity` function on the `PoolManager`
+- Liquidity providers can add or remove liquidity using the `modifyLiquidity` function on the `PoolManager`. However, you wouldn't call this directly from your application, you would call this from a periphery contract to handle the locking & unlocking a particular pool. 
 - The `PoolManager` executes the following steps:
     1. Checks if the pool is valid and initialized
     2. Determines if the modification is an addition or removal of liquidity
@@ -67,18 +71,8 @@ The primary purpose of the `PoolManager` is to:
 - Tokens are moved into the `PoolManager` contract, and all subsequent actions are performed within the contract's context
 - Only the final output tokens are withdrawn from the `PoolManager` at the end of the transaction
 
-### Locking Mechanism
-- The `PoolManager` uses a locking mechanism to ensure atomicity and correctness of complex operations like multi-hop swaps
-- The contract can be locked and unlocked using the `unlock` function
-- When unlocked, the calling contract can perform various operations and settle outstanding balances before returning control to the `PoolManager`
 
 ## Transient Storage
 - The `PoolManager` utilizes transient storage (EIP-1153) to store temporary data during complex operations
 - Transient storage reduces gas costs by avoiding regular storage operations for data only needed within a single transaction
 
-## Hooks
-- The `PoolManager` supports extensibility through hooks, allowing customization of pool behavior
-- Hooks are separate contracts that implement functions like `beforeSwap`, `afterAddLiquidity`, and `beforeInitialize`
-- The `PoolManager` determines which hook functions are implemented based on a bitmap encoded in the hook contract's address
-
-By focusing on efficient liquidity management, gas optimization, and extensibility, the `PoolManager` contract serves as the backbone of Uniswap V4, enabling a more flexible and cost-effective decentralized exchange experience.
