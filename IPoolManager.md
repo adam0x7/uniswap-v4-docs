@@ -2,7 +2,7 @@
 
 The `IPoolManager` interface defines the main methods for interacting with the Uniswap V4 pool manager contract. It exposes the core liquidity management and swap functionality.
 
-## Write Methods
+## Methods
 
 ### initialize
 
