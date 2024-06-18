@@ -24,12 +24,6 @@ Uniswap V4 introduces a powerful and flexible hook system that allows developers
 - Permissions are defined using the `Hooks.Permissions` struct, where each permission corresponds to a specific hook function.
 - The `PoolManager` uses these permissions to determine which hook functions to call for a given pool.
 
-### Customization and Innovation
-
-- Hooks enable developers to customize the behavior of liquidity pools according to their specific requirements.
-- By implementing custom logic in hook functions, developers can create new features, modify existing functionality, or introduce entirely new use cases.
-- Hooks unlock a wide range of possibilities for building advanced DeFi applications on top of Uniswap V4.
-
 ## Core Hook Functions
 
 Uniswap V4 provides a set of core hook functions that can be implemented by developers:
@@ -46,13 +40,13 @@ Uniswap V4 provides a set of core hook functions that can be implemented by deve
 - `afterAddLiquidity`: Called after liquidity is added to a pool.
 - `beforeRemoveLiquidity`: Called before liquidity is removed from a pool.
 - `afterRemoveLiquidity`: Called after liquidity is removed from a pool.
-- These hooks enable customization of liquidity management, such as implementing custom pricing models or applying additional constraints.
+- These hooks enable customization of liquidity management, such as [insert examples]
 
 ### Swap Hooks
 
 - `beforeSwap`: Called before a swap is executed in a pool.
 - `afterSwap`: Called after a swap is executed in a pool.
-- Swap hooks allow developers to modify swap behavior, apply custom trading rules, or execute additional actions during swaps.
+- Swap hooks allow developers to modify swap behavior, applying fees, [insert examples]
 
 ### Donate Hooks
 
@@ -64,12 +58,10 @@ Uniswap V4 provides a set of core hook functions that can be implemented by deve
 
 The introduction of hooks in Uniswap V4 opens up a world of possibilities for developers to innovate and build new DeFi protocols. Some potential use cases include:
 
-- Customized AMMs with different pricing models and trading rules.
+- Customized AMMs with different pricing curves that xy = k.
 - Yield farming and liquidity mining protocols that incentivize liquidity provision.
 - Derivative and synthetic asset platforms built on top of Uniswap V4 liquidity.
-- Insurance and risk management solutions integrated with Uniswap V4 pools.
-- Decentralized lending and borrowing protocols leveraging Uniswap V4 liquidity.
+- Lending hooks integrated with Uniswap V4 pools.
 
-Uniswap V4 hooks introduce a paradigm shift in the development of decentralized exchanges and DeFi protocols. By enabling customization and extension of liquidity pools, hooks empower developers to build innovative applications and unlock new use cases.
 
-The core hook functions, combined with the flexibility of the hook system, provide a solid foundation for developers to create unique and tailored DeFi solutions. As the Uniswap V4 ecosystem evolves, hooks will play a crucial role in driving innovation, composability, and the growth of the DeFi landscape.
+As a hook developer you can easily bootstrap the codebase of an entirely new DeFi protocol through hook designs, which subsequently drives down your audit costs and allows you to develop faster. However, its important to note that just because you made a hook, that does not mean you will get liquidity routed to your hook from the Uniswap frontend. 
